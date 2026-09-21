@@ -5,22 +5,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Unzip code
-        run: |
-          unzip -o takapay.zip
-          cp -r takapay/*-. /  || true
-          ls
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
+      - run: unzip -o takapay.zip
+      - run: cp -r takapay/.. || true
+      - uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
-      - name: Build APK
-        run: |
-          chmod +x gradlew
-         ./gradlew assembleDebug
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
+      - run: chmod +x gradlew
+      - run: ./gradlew assembleDebug
+      - uses: actions/upload-artifact@v4
         with:
           name: TakaPay-APK
           path: app/build/outputs/apk/debug/app-debug.apk
