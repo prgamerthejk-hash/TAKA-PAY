@@ -6,7 +6,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: unzip -o takapay.zip
-      - run: cp -r takapay/. . || true
+      - run: |
+          ls -la
+          if [ -d takapay ]; then cp -r takapay/. .; fi
+          if [ -f takapay/takapay/gradlew ]; then cp -r takapay/takapay/. .; fi
+          ls -la
       - uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
